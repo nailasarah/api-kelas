@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Books</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .top-btn {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📚 Data Books</h2>
+
+<button class="top-btn" onclick="goToAdd()">➕ Tambah Data</button>
+
+<div id="list"></div>
+
+<script>
+const api = "http://127.0.0.1:8000/api/books";
+
+function getBooks() {
+    axios.get(api).then(res => {
+        let list = document.getElementById("list");
+        list.innerHTML = "";
+
+        res.data.forEach(book => {
+            list.innerHTML += `
+                <div class="card">
+                    <b>${book.title}</b><br>
+                    Author: ${book.author}<br>
+                    <button onclick="editBook(${book.id})">✏️ Update</button>
+                </div>
+            `;
+        });
+    });
+}
+
+function goToAdd() {
+    window.location.href = "add.html";
+}
+
+function editBook(id) {
+    window.location.href = "edit.html?id=" + id;
+}
+
+getBooks();
+</script>
+
+</body>
+</html>
