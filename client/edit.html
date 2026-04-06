@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Buku</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<h2>✏️ Edit Buku</h2>
+
+<input id="title"><br><br>
+<input id="author"><br><br>
+
+<button onclick="updateBook()">Update</button>
+<button onclick="back()">Kembali</button>
+
+<script>
+const api = "http://127.0.0.1:8000/api/books";
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+// ambil data lama
+axios.get(`${api}/${id}`).then(res => {
+    document.getElementById("title").value = res.data.title;
+    document.getElementById("author").value = res.data.author;
+});
+
+function updateBook() {
+    axios.put(`${api}/${id}`, {
+        title: document.getElementById("title").value,
+        author: document.getElementById("author").value
+    }).then(() => {
+        alert("Berhasil update!");
+        window.location.href = "index.html";
+    });
+}
+
+function back() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

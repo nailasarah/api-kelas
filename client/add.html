@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Buku</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<h2>➕ Tambah Buku</h2>
+
+<input id="title" placeholder="Title"><br><br>
+<input id="author" placeholder="Author"><br><br>
+
+<button onclick="addBook()">Simpan</button>
+<button onclick="back()">Kembali</button>
+
+<script>
+const api = "http://127.0.0.1:8000/api/books";
+
+function addBook() {
+    axios.post(api, {
+        title: document.getElementById("title").value,
+        author: document.getElementById("author").value
+    }).then(() => {
+        alert("Berhasil tambah!");
+        window.location.href = "index.html";
+    });
+}
+
+function back() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
